@@ -1,0 +1,32 @@
+version: "3"
+services:
+  mysql-parking:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=parking-db
+    ports:
+      - "3309:3306"
+  rabbitmq-parking-app:
+    image: rabbitmq
+    ports:
+      - "15673:15672"
+      - "5673:5672"
+  payment-service:
+    build: ../payment-service
+    ports:
+      - "8089:8080"
+  parking-service: # doesnt work
+    build: ../parking-service
+    ports:
+      - "8088:8080"
+    environment:
+      - spring.datasource.url=jdbc:mysql://mysql-parking:3306/parking-db
+      - spring.rabbitmq.host=rabbitmq-parking-app
+    depends_on:
+      - mysql-parking
+      - rabbitmq-parking-app
+  psu-adapter:
+    build: ../psu-adapter
+    depends_on:
+      - parking-service
