@@ -30,3 +30,6 @@ services:
     build: ../psu-adapter
     depends_on:
       - parking-service
+  ads-service:
+    build: ../ads-service
+      - "5000:5000"
