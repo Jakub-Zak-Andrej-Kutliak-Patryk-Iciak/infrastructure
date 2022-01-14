@@ -16,7 +16,7 @@ services:
     build: ../payment-service
     ports:
       - "8089:8080"
-  parking-service: # doesnt work
+  parking-service:
     build: ../parking-service
     ports:
       - "8088:8080"
