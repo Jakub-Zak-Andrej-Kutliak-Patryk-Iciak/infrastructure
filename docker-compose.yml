@@ -30,3 +30,6 @@ services:
     build: ../psu-adapter
     depends_on:
       - parking-service
+      - rabbitmq-parking-app
+    environment:
+      - spring.rabbitmq.host=rabbitmq-parking-app
