@@ -46,3 +46,6 @@ services:
       - "5001:5001"
     depends_on:
       - rabbitmq-parking-app
+  ads-service:
+    build: ../ads-service
+      - "5000:5000"
