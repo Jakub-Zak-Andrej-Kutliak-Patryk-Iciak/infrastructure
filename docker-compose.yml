@@ -28,6 +28,8 @@ services:
       - rabbitmq-parking-app
   psu-adapter:
     build: ../psu-adapter
+    ports:
+      - "8079:8080"
     depends_on:
       - parking-service
       - rabbitmq-parking-app
