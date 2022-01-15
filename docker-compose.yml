@@ -23,17 +23,18 @@ services:
   parking-service:
     image: patrykiciak/parking-service:latest
     restart: on-failure
-    ports:
-      - "8088:8080"
     environment:
       - spring.datasource.url=jdbc:mysql://mysql-parking:3306/parking-db
       - spring.rabbitmq.host=rabbitmq-parking-app
       - spring.rabbitmq.port=5672
+    ports:
+      - "8088:8080"
     depends_on:
       - mysql-parking
       - rabbitmq-parking-app
   psu-adapter:
     image: patrykiciak/psu-adapter:latest
+    restart: on-failure
     environment:
       - spring.rabbitmq.host=rabbitmq-parking-app
       - spring.rabbitmq.port=5672
@@ -47,17 +48,17 @@ services:
       - MQ_URL=amqp://rabbitmq-parking-app:5672
       - MQ_QUEUE_NAME=mail-queue
       - MQ_CONSUMER_TAG=mail-service-consumer
-      - MAIL_SERVER=smtp.websupport.sk
-      - MAIL_PORT=465
-      - MAIL_USER=jakub.zak@cybik.sk
-      - MAIL_PASS=jakZak01
-      - MAIL_DEFAULT_SENDER=jakub.zak@cybik.sk
+      - MAIL_SERVER=
+      - MAIL_PORT=
+      - MAIL_USER=
+      - MAIL_PASS=
+      - MAIL_DEFAULT_SENDER=
     ports:
       - "5001:5001"
     depends_on:
       - rabbitmq-parking-app
   ads-service:
-    image: jakubzzak/ads-service-rabbitmq-node:0.0.2
+    image: jakubzzak/ads-service-rabbitmq-node:0.0.3
     restart: on-failure
     environment:
       - REQUEST_TIMEOUT_MS=5000
