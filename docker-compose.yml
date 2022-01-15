@@ -21,7 +21,7 @@ services:
     ports:
       - "8089:8080"
   parking-service:
-    image: patrykiciak/parking-service:0.0.2
+    image: patrykiciak/parking-service:latest
     restart: on-failure
     ports:
       - "8088:8080"
@@ -33,7 +33,7 @@ services:
       - mysql-parking
       - rabbitmq-parking-app
   psu-adapter:
-    image: patrykiciak/psu-adapter:0.0.2
+    image: patrykiciak/psu-adapter:latest
     environment:
       - spring.rabbitmq.host=rabbitmq-parking-app
       - spring.rabbitmq.port=5672
